@@ -52,6 +52,13 @@ class RecipesDashboard extends Component {
     });
   };
 
+  deleteRecipe = recipeId => {
+    const updatedRecipes = this.state.recipes.filter(rec => rec.id !== recipeId);
+    this.setState({
+      recipes: updatedRecipes
+    });
+  };
+
   render() {
     return (
       <div>
@@ -64,6 +71,7 @@ class RecipesDashboard extends Component {
             closeForm={this.closeForm}
             createRecipe={this.createRecipe}
             updateRecipe={this.updateRecipe}
+            deleteRecipe={this.deleteRecipe}
             selectedRecipe={this.state.selectedRecipe}
           />
         )}

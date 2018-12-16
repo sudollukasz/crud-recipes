@@ -5,14 +5,16 @@ export class RecipesForm extends Component {
     recipe: {
       recipeName: '',
       ingridients: ''
-    }
+    },
+    disableEdit: false
   };
 
   componentDidMount() {
     const { selectedRecipe } = this.props;
     if (selectedRecipe !== null) {
       this.setState({
-        recipe: selectedRecipe
+        recipe: selectedRecipe,
+        disableEdit: true
       });
     }
   }
@@ -34,9 +36,17 @@ export class RecipesForm extends Component {
     }
   };
 
+  editForm = e => {
+    e.preventDefault();
+    this.setState({
+      disableEdit: false
+    });
+  };
+
   render() {
-    const { closeForm } = this.props;
-    const { recipe } = this.state;
+    const { closeForm, deleteRecipe } = this.props;
+    const { recipe, disableEdit } = this.state;
+
     return (
       <div>
         <form onSubmit={this.onFormSubmit}>
@@ -46,6 +56,7 @@ export class RecipesForm extends Component {
             onChange={this.onInputChange}
             value={recipe.recipeName}
             placeholder="Recipe Name"
+            disabled={disableEdit}
           />
           <label>Ingridients:</label>
           <input
@@ -53,9 +64,21 @@ export class RecipesForm extends Component {
             onChange={this.onInputChange}
             value={recipe.ingridients}
             placeholder="Ingridients"
+            disabled={disableEdit}
           />
-          <button type="submit">Ok</button>
+          {!disableEdit && <button type="submit">Ok</button>}
+
+          {recipe.id && disableEdit && <button onClick={this.editForm}>Edit</button>}
           <button onClick={closeForm}>Cancel</button>
+          {recipe.id && (
+            <button
+              onClick={() => {
+                deleteRecipe(recipe.id);
+              }}
+            >
+              Delete
+            </button>
+          )}
         </form>
       </div>
     );
