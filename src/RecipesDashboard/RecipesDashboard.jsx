@@ -36,20 +36,26 @@ class RecipesDashboard extends Component {
       recipes: updatedRecipes,
       isOpen: false
     });
+
+    localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
   };
 
   updateRecipe = updatedRecipe => {
+    const updatedRecipes = this.state.recipes.map(recipe => {
+      if (recipe.id === updatedRecipe.id) {
+        return Object.assign({}, updatedRecipe);
+      } else {
+        return recipe;
+      }
+    });
+
     this.setState({
-      recipes: this.state.recipes.map(recipe => {
-        if (recipe.id === updatedRecipe.id) {
-          return Object.assign({}, updatedRecipe);
-        } else {
-          return recipe;
-        }
-      }),
+      recipes: updatedRecipes,
       isOpen: false,
       selectedRecipe: null
     });
+
+    localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
   };
 
   deleteRecipe = recipeId => {
@@ -57,7 +63,18 @@ class RecipesDashboard extends Component {
     this.setState({
       recipes: updatedRecipes
     });
+
+    localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
   };
+
+  componentDidMount() {
+    if (localStorage.hasOwnProperty('recipes')) {
+      const recipes = localStorage.getItem('recipes');
+      this.setState({
+        recipes: JSON.parse(recipes)
+      });
+    }
+  }
 
   render() {
     return (
