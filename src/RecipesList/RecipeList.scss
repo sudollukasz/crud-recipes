@@ -1,0 +1,21 @@
+.list__title {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+
+.list__element {
+  list-style: none;
+
+  &__button {
+    text-decoration: none;
+    background: #aed581;
+    color: #ffffff;
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+    border-radius: 1rem;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 1rem;
+  }
+}

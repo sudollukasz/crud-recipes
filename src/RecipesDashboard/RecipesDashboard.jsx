@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import cuid from 'cuid';
 import RecipesList from '../RecipesList/RecipesList';
 import RecipesForm from '../RecipesForm/RecipesForm';
+import './RecipesDashboard.scss';
 
 class RecipesDashboard extends Component {
   state = {
@@ -78,11 +79,8 @@ class RecipesDashboard extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <RecipesList recipes={this.state.recipes} openRecipe={this.openRecipe} />
-        <button type="button" onClick={this.openForm}>
-          Create New
-        </button>
         {this.state.isOpen && (
           <RecipesForm
             closeForm={this.closeForm}
@@ -91,6 +89,11 @@ class RecipesDashboard extends Component {
             deleteRecipe={this.deleteRecipe}
             selectedRecipe={this.state.selectedRecipe}
           />
+        )}
+        {!this.state.isOpen && (
+          <button type="button" onClick={this.openForm} className="new-recipe__button">
+            Create New
+          </button>
         )}
       </div>
     );
